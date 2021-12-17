@@ -1,6 +1,6 @@
->#Recipe Generator
+#Recipe Generator
 
->##Introduction
+##Introduction
 
 >This started of as a weekly hackerthon challenge for my bootcamp (The School Of Code). For this task,  this website needed to fetch and display API data from a online RESTAPI at the user's request. For instance, if the user types in "tofu" into the search bar and presses the search button, data from the recipe API about "tofu" should be acquired then displayed on the webpage the user sees. However, by the end of the challenge, I only able to get data for one recipe in the browser console and did not manage to display it on the webpage. 
 
