@@ -1,4 +1,12 @@
- let recipeResults = document.querySelector("#recipe-results");
+const body = document.querySelector('body');
+const mainContainer = document.querySelector('#main-container');
+
+ // append new elements to DOM 
+
+// the issue:
+
+//I want to create a new div for each recipe with the recipe content inside
+ 
 
 
 function handleInputChange() {
@@ -17,42 +25,84 @@ async function fetchRecipe(food) {
     //an arrary of objects within objects)
     const results = data.hits;
     console.log({results});
+    // store results in variables 
+
+
+
     
     //create function that returns title of recipe for each item in array
-    function recipeTitle(recipeItem){
-        let title = document.createElement("H1");
-        let foodImage = document.createElement("IMG");
+    const buildRecipeCard = function(recipeItem){
+     // create elements needed to build a card
+        const div = document.createElement('div');
+        const heading = document.createElement('h3');
+        const link = document.createElement('a');
+        const img = document.createElement('img');
+        const ingredients = document.createElement('p');
+        
+    
+    // append created elements to DOM
+        // const body = document.querySelector('body');
+        mainContainer.append(div);
+        heading.append(link);
+        div.append(heading);
+        div.append(img);
+        div.append(ingredients);
+
+    // store information in variables 
         let image = recipeItem.recipe.images.SMALL.url;
-        foodImage.setAttribute("src", image);
-        //create  a h1 element
-        // insert text
-        title.innerHTML = recipeItem.recipe.label;
-        //append h1 to body of html
-        recipeResults.appendChild(title);
-        recipeResults.appendChild(foodImage);
+        let recipeTitle = recipeItem.recipe.label;
+        let recipeIngredients = recipeItem.recipe.ingredientLines;
+        let allergies = recipeItem.recipe.cautions;
+        let recipeURL =  recipeItem.recipe.url;
+    
+    //function to set multiple attributes 
+    function setAttributes(element, attributes){
+        for(let key in attributes){
+            element.setAttribute(key, attributes[key]);
+        }
+    }
+
+    // set attributes
+        div.setAttribute('id','recipeResults');
+        img.setAttribute("src", image);
+        setAttributes(link, {"href": recipeURL, "target": "_blank"});
+        
+        
+        ingredients.innerHTML = recipeIngredients;
+        link.innerHTML = recipeTitle;
+
+        div.appendChild(heading);
+        div.appendChild(img);
         return console.log("label for recipe:", recipeItem.recipe.label);
     }
     //issue: some of the images dont have the sizes available
     // function foodImage(recipeItem){
     //     return console.log(recipeItem.recipe.images.SMALL.url);
     // }
-    function recipeIngredients(recipeItem){
-        return console.log("ingredients for recipe:", recipeItem.recipe.ingredientLines);
-    }
+    results.forEach(foodItem =>
+        buildRecipeCard(foodItem)
+    );
 
-    function allergies(recipeItem){
-        return console.log("allergies for recipe:", recipeItem.recipe.cautions);
-    }
 
-    function recipeURL(recipeItem){
-        return console.log("url for images:", recipeItem.recipe.url)
 
-    }
+
+    // function recipeIngredients(recipeItem){
+    //     return console.log("ingredients for recipe:", recipeItem.recipe.ingredientLines);
+    // }
+
+    // function allergies(recipeItem){
+    //     return console.log("allergies for recipe:", recipeItem.recipe.cautions);
+    // }
+
+    // function recipeURL(recipeItem){
+    //     return console.log("url for images:", recipeItem.recipe.url)
+
+    // }
     // function to delete all elements created last time when the button is pressed 
-    results.forEach(recipeTitle);
-    results.forEach(recipeIngredients); 
-    results.forEach(recipeURL);
-    results.forEach(allergies);
+    // results.forEach(recipeTitle);
+    // results.forEach(recipeIngredients); 
+    // results.forEach(recipeURL);
+    // results.forEach(allergies);
     // results.forEach(foodImage);
 
 }
@@ -68,9 +118,9 @@ async function fetchRecipe(food) {
 
 
 
-function reloadPage(){
-    window.location.reload(true);
-}
+// function reloadPage(){
+//     window.location.reload(true);
+// }
 
 
 
@@ -82,7 +132,7 @@ function handleClick(){
     let food = handleInputChange();
     if (food !== ""){
         fetchRecipe(food);
-        recipeResults.replaceChildren();
+        mainContainer.replaceChildren();
         // recipeResults.replaceChild(food, title)
     }else{
         alert("Please enter a recipe!")
