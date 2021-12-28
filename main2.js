@@ -1,14 +1,6 @@
 const body = document.querySelector('body');
 const mainContainer = document.querySelector('#main-container');
 
- // append new elements to DOM 
-
-// the issue:
-
-//I want to create a new div for each recipe with the recipe content inside
- 
-
-
 function handleInputChange() {
     const userInput = document.querySelector("#food-input").value;
     return userInput
@@ -106,12 +98,7 @@ async function fetchRecipe(food) {
     // results.forEach(foodImage);
 
 }
-// function recipeDisplay(results){
-// selects inner html of content and updates the dom
-// }
-// you can change the whole conent of an html element in a function
 
-// TO-DO: find way to delete elements of child
 
 
 
@@ -145,5 +132,3 @@ let button = document.querySelector("#recipe-button");
 
 button.addEventListener("click", handleClick);
 
-// when give me a recipe button is pressed, 
-//i want the app to update information on the dom
